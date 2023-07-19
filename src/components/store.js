@@ -35,6 +35,10 @@ function Store() {
             }
         };
 
+        //cerate a remove product function
+        const handleRemoveProduct = (productName) => {
+         setProductList(productsList.filter((product)=> Product.name !== productName))
+        };
     return (
         <div>
             <h1>Store</h1>
@@ -66,7 +70,8 @@ function Store() {
                     price={product.price}
                     id={product.id}
                 />
-            ))}
+            ))};
+            <button onClick={()=> handleRemoveProduct(Product.name)}>Remove Product</button>
         </div>
     )
 };
