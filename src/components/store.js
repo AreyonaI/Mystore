@@ -1,5 +1,6 @@
 import React, { useState } from 'react';//An example of a hook. Hooks are functions that let you hook into React features
 import Product from "./product";
+import Cart from "./cart";
 
 
 function Store() {
@@ -20,6 +21,8 @@ function Store() {
         name: "",
         price: ""
     });
+
+    const [cartItems, setCartItems] = useState([]);
     //handleChange Function
     const handleInputChange = (event) => {
         setNewProduct({
@@ -37,8 +40,24 @@ function Store() {
 
         //cerate a remove product function
         const handleRemoveProduct = (productName) => {
-         setProductList(productsList.filter((product)=> Product.name !== productName))
+         setProductList(productsList.filter((product)=> product.name !== productName))
         };
+
+       
+        const addCartItems = ()  =>{
+
+        }
+
+        const handleAddToCart = (productName) =>{
+            const existingItem= cartItems.find((item)=>item.name === product.name);
+                if (existingItem){
+                  const  updateCartItems = cartItems.map((item)=> item.name===product.name, {...item, Quanttity:item.quanttity=1})
+                  setCartItems(updateCartItems);
+                }
+                else{
+                    setCartItems([...cartItems, {...product, quantity: item.quantity}]);
+                }
+        }
     return (
         <div>
             <h1>Store</h1>
@@ -62,7 +81,9 @@ function Store() {
         value={newProduct.price}
         onChange={handleInputChange}
         />
-        <button onClick={handleAddProduct}>Add New Product</button>
+        <button onClick={handleAddProduct}>Add Product</button>
+        <button onClick={()=> handleRemoveProduct(newProduct.name)}>Remove Product</button>
+        <button onclick ={()=> handleAddToCart(product)}>Add to Cart </button>
     
             {productsList.map((product) => (
                 <Product
@@ -70,8 +91,10 @@ function Store() {
                     price={product.price}
                     id={product.id}
                 />
-            ))};
-            <button onClick={()=> handleRemoveProduct(Product.name)}>Remove Product</button>
+            ))}
+            <div>
+                <Cart  cartItems={cartItems}/>
+            </div>
         </div>
     )
 };
